@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/a2526d54b6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="nav">
+            <a href="" class="nav-logo">
+                <img src="img/favicon.png" alt="">
+                <b>STORE</b>
+            </a>
+            <div class="nav-navegacion" id="navegacion">
+                <ul>
+                    <a href="#"><li>HOME</li> </a>
+                    <a href="#"><li>PRODUCTS</li></a></li>
+                </ul>
+                <b id="btn-close">x</b>
+            </div>
+            <div class="nav-carrito">
+                <i class="fa-solid fa-moon"></i>
+                <div>
+                    <i class="fa-solid fa-bag-shopping" id="cart"></i>
+                    <b id="cont-carrito">0</b>
+                </div>
+                <i class="fa-solid fa-border-all" id="btn-menu"></i>
+            </div>
+        </nav>
+
+        <div class="encabezado">
+            <div class="encabezado-texto">
+                <h1>New Sweatshirt COLLECTIONS 2022</h1>
+                <p>
+                    Latest arrival of the new Hanes Midweight Crewneck sweatshirt imported from the 2022 series, with a
+                    modern design.
+                </p>
+                <span>$14.00</span>
+                <div class="buttons">
+                    <input class="btn-discover" type="button" value="Discover">
+                    <input class="btn-add" type="button" value="ADD TO CART">
+                </div>
+            </div>
+
+            <div class="encabezado-img">
+                <img src="img/home.png" alt="">
+            </div>
+        </div>
+    </header>
+
+    <div class="carrito" id="carrito">
+        <!-- EMPTY CARD -->
+        <b id="btn-close-cart">x</b>
+        <div class="empty-carrito " id="empty-carrito">
+            
+            <h3>My Cart</h3>
+            <img src="img/empty-cart.png" alt="">
+            
+            <p>Your cart is empty</p>
+            <p>You can add items to your cart by clicking on the "+" button on the product</p>
+            
+        </div>
+        <!-- MY CART -->
+        <div class="carrito-products oculto" id="carrito-products">
+            
+            <h2>My Cart</h2>
+            <div class="carrito-container noSelected" data-cartProduct="hoodie">
+                <div>
+                    <img src="img/featured1.png" alt="">
+                </div>
+                <div class="texto-product">
+                    <h3>Hoodies</h3>
+                    <p>Stock: 10 <span> $14.00</span></p>
+                    <p>Subtotal: $14.00</p>
+                    <p>1 units</p>
+                </div>
+            </div>
+            <div class="carrito-container noSelected" data-cartProduct="shirt">
+                <div>
+                    <img src="img/featured2.png" alt="">
+                </div>
+                <div class="texto-product">
+                    <h3>Shirts</h3>
+                    <p>Stock: 15 <span> $24.00</span></p>
+                    <p>Subtotal: $24.00</p>
+                    <p>1 units</p>
+                </div>
+            </div>
+            <div class="carrito-container noSelected" data-cartProduct="sweatshirt">
+                <div>
+                    <img src="img/featured3.png" alt="">
+                </div>
+                <div class="texto-product">
+                    <h3>Sweatshirts</h3>
+                    <p>Stock: 20 <span> $23.00</span></p>
+                    <p>Subtotal: $23.00</p>
+                    <p>1 units</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="items-precios" id="items-precios">
+            <span>0 items</span>
+            <span>$0.00</span>
+        </div>
+        <div class="carrito-checkout">
+            <input type="button" value="🎁 Checkout" class="btn-checkout">
+        </div>
+    </div>
+
+    <ul class="filtro">
+        <li id="all" data-product="all">
+            <h3>Show all</h3>
+            <p>show all products</p>
+        </li>
+        <li id="hoodies" data-product="hoodie">
+            <h3 >Hoodies</h3>
+            <p>3 products</p>
+        </li>
+        <li id="shirts" data-product="shirt">
+            <h3>Shirts</h3>
+            <p>4 products</p>
+        </li>
+        <li id="sweatshirts" data-product="sweatshirt">
+            <h3>Sweatshirts</h3>
+            <p>4 products</p>
+        </li>
+    </ul>
+
+    <section class="productos" id="section-productos">
+        <div class="productos-container" data-product="hoodie">
+            <div class="productos__img">
+                <img src="img/featured1.png" alt="">
+            </div>
+            <div class="productos__info">
+                <div>
+                    <p>$14.00</p>
+                    <h4>Hoodies</h4>
+                </div>
+                <p>Stock: 10</p>
+                <i class="fa-solid fa-circle-plus btn" id="btn-hoodie" data-cartProduct="hoodie"></i>
+            </div>
+        </div>
+
+        
+
+        <div class="productos-container" data-product="shirt">
+            <div class="productos__img">
+                <img src="img/featured2.png" alt="">
+            </div>
+            <div class="productos__info">
+                <div>
+                    <p>$24.00</p>
+                    <h4>Shirts</h4>
+                </div>
+                <p>Stock: 15</p>
+                <i class="fa-solid fa-circle-plus" id="btn-shirt" data-cartProduct="shirt"></i>
+            </div>
+        </div>
+
+        <div class="productos-container" data-product="sweatshirt">
+            <div class="productos__img">
+                <img src="img/featured3.png" alt="">
+            </div>
+            <div class="productos__info">
+                <div>
+                    <p>$24.00</p>
+                    <h4>Sweatshirts</h4>
+                </div>
+                <p>Stock: 20</p>
+                <i class="fa-solid fa-circle-plus" id="btn-sweatshirt" data-cartProduct="sweatshirt"></i>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <div class="information">
+                <h3>Our Information</h3>
+                <p>Lima-Perú</p>
+            </div>
+            <div class="about">
+                <h3>About Us</h3>
+                <ul>
+                    <li>Support Center</li>
+                    <li>Customer Support</li>
+                    <li>About Us</li>
+                    <li>Copy Right</li>
+                </ul>
+            </div>
+            <div class="product">
+                <h3>Product</h3>
+                <ul>
+                    <li>Hoodies</li>
+                    <li>Shirts</li>
+                    <li>Weatshirts</li>
+                </ul>
+            </div>
+            <div class="social">
+                <h3>Social</h3>
+                <div class="social-redes">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                </div>
+            </div>
+        </div>
+
+        <p>&copy;Raúl Tezén. Todos los derechos reservados</p>
+    </footer>
+
+</body>
+<script src="script.js"></script>
+</html>

@@ -1,0 +1,362 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    padding: 1rem;
+    background-color: #eaeaea;
+    font-family: sans-serif;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.nav-logo{
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    gap: 1rem;
+    color: #000;
+}
+
+/* MENU */
+.nav-navegacion{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #eaeaea;
+    padding: 4rem 2rem;
+    transform: translateX(100%); /* moverl  */
+
+}
+
+.nav-navegacion ul{
+    list-style: none;
+    text-align: center;
+}
+
+.nav-navegacion ul a{
+    text-decoration: none;
+}
+
+.nav-navegacion ul li{
+    margin-top: 2rem;
+    font-size: 1.8rem;
+    color: #555;
+}
+
+.nav-navegacion>b,
+.carrito b{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1.5rem 1.5rem 0 0;
+    font-size: 2rem;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-carrito{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-carrito i{
+    font-size: 1.4rem;
+    color: #777;
+    cursor: pointer;
+}
+
+.nav-carrito i:hover{
+    color: #000;
+}
+
+.nav-carrito>div{
+    position: relative;
+}
+
+.nav-carrito>div{
+    position: relative;
+}
+
+.nav-carrito>div>b{
+    font-size: .7rem;
+    color: #fff;
+    padding-top: 3px;
+    background-color: #000;
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 14px;
+    right: -7px;
+    text-align: center;
+}
+
+/* ENCABEZADO */
+.encabezado{
+    display: flex;
+    margin-top: 3rem;
+}
+
+.encabezado-texto{
+    width: 60%;
+}
+
+.encabezado-texto>*{
+    margin-bottom: 1.5rem;
+}
+
+.encabezado-texto>span{
+    color: #f55;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.buttons{
+    display: flex;
+    width: 90%;
+    align-items: center;
+    margin-top: 1rem; /* no funciona el margin en el padding de arriba */
+}
+
+.buttons>*{
+    border: none;
+}
+
+.buttons .btn-discover{
+    width: 40%;
+    background-color: #ccc;
+    padding: 1rem;
+    height: 70%;
+}
+
+.buttons .btn-add{
+    width: 60%;
+    background-color: #222;
+    color: #fff;
+    padding: 1.5rem;
+}
+
+.encabezado-img{
+    width: 40%;
+}
+
+.encabezado-img img{
+    width: 100%;
+}
+
+/* CARRITO */
+.carrito{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    background-color: #eaeaea;
+    transform: translateX(100%);
+    top: 0;
+    left: 0;
+    padding: 2rem;
+}
+
+.carrito h3{
+    margin-top: 4rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.carrito>:nth-child(4){
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.carrito .items-precios{
+    margin: 5rem 0 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.carrito-checkout{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.carrito-checkout .btn-checkout{
+    padding: 1.5rem;
+    font-size: 1rem;
+    border-style: none;
+    color: #555;
+    background-color: #aaa;
+}
+
+/* CARRITO PRODUCTS*/
+.carrito-products{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+}
+
+.carrito-products h2{
+    text-align: center;
+}
+
+.carrito-container{
+    display: flex;
+    gap: 1rem;
+}
+
+.carrito-container>:first-child{
+    min-width: 100px;
+    height: 100px;
+}
+
+.carrito-container>:first-child img{
+    width: 100%;
+    height: 100%;
+}
+
+.texto-product{
+    line-height: 2rem;
+    font-size: .9rem;
+    height: 100px;
+    width: 200px;
+}
+
+.texto-product h3{
+    /* quitarle el margin del h3 */
+    margin: 0;
+    font-size: 1rem;
+    text-align: start;
+}
+
+
+
+/* FILTRO */
+
+.filtro{
+    margin-top: 2.5rem;
+    list-style: none;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    justify-items: center;
+    gap: 2rem;
+}
+
+.filtro>li{
+    text-align: center;
+    line-height: 1.7rem;
+    cursor: pointer;
+}
+
+.filtro>li:hover{
+    cursor: pointer;
+    color: #66f;
+}
+
+    /* a los que no seleccionamos */
+    /* puse otra clase (oculto) porque tuve conflictos en js */
+.noSelected, .oculto{
+  display: none;
+}
+
+/* PRODUCTOS */
+
+.productos{
+    margin-top: 3rem;
+    width: 90%;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    gap: 2rem;
+}
+
+.productos__img{
+    text-align: center;
+    background-color: #ccc;
+    border-radius: 14px 14px 0 0;
+}
+
+.productos__img img{
+    width: 100%;
+}
+
+.productos__info{
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    font-size: 1rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0 0 14px 14px;
+}
+
+.productos__info>div>p{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.productos__info>div>h4{
+    font-weight: normal;
+}
+
+.productos__info>i{
+    position: absolute;
+    right: 0;
+    top: -1rem;
+    right: 1rem;
+    font-size: 2.3rem;
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer{
+    margin-top: 6rem;
+    background-color: #ccc;
+    padding: 4rem 1rem 1rem;
+}
+
+
+.footer-info{
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    gap: 2rem;
+}
+
+.footer-info>*{
+    line-height: 2rem;
+}
+
+.footer-info h3{
+    margin-bottom: 1rem;
+    color: #000;
+}
+
+.footer-info>*>*{ /* todos los elementos dentro de cada contenedor */
+    color: #555;
+}
+
+.footer-info .about ul,
+.footer-info .product ul{
+    list-style: none;
+}
+
+.footer-info .social-redes{
+    display: flex;
+    gap: 1.5rem;
+}
+
+footer>p{
+    text-align: center;
+    padding: 2rem;
+}
