@@ -28,7 +28,7 @@ body{
 .nav-navegacion{
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: 1700px;
     top: 0;
     left: 0;
     z-index: 100;
@@ -230,7 +230,6 @@ body{
     line-height: 2rem;
     font-size: .9rem;
     height: 100px;
-    width: 200px;
 }
 
 .texto-product h3{
@@ -240,6 +239,27 @@ body{
     text-align: start;
 }
 
+.texto-product .unidades{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* propiedades a los iconos */
+
+.unidades .fa-solid{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.unidades .fa-trash{
+    color: #f00;
+    margin-left: 3rem;
+}
+
+.texto-product .unidades p{
+    color: #000;
+}
 
 
 /* FILTRO */

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header>
+    <header id="home">
         <nav class="nav">
             <a href="" class="nav-logo">
                 <img src="img/favicon.png" alt="">
@@ -19,8 +19,8 @@
             </a>
             <div class="nav-navegacion" id="navegacion">
                 <ul>
-                    <a href="#"><li>HOME</li> </a>
-                    <a href="#"><li>PRODUCTS</li></a></li>
+                    <a href="#home" id="a-home"><li>HOME</li> </a>
+                    <a href="#products" id="a-products"><li>PRODUCTS</li></a></li>
                 </ul>
                 <b id="btn-close">x</b>
             </div>
@@ -78,7 +78,12 @@
                     <h3>Hoodies</h3>
                     <p>Stock: 10 <span> $14.00</span></p>
                     <p>Subtotal: $14.00</p>
-                    <p>1 units</p>
+                    <div class="unidades" data-producto="hoodie">
+                        <i class="fa-solid fa-square-minus btn-menos" data-producto="restar-hoodie"></i>
+                        <p>1 units</p>
+                        <i class="fa-solid fa-square-plus btn-mas" data-producto="sumar-hoodie"></i>
+                        <i class="fa-solid fa-trash btn-borrar" data-producto="borrar-hoodie"></i>
+                    </div>
                 </div>
             </div>
             <div class="carrito-container noSelected" data-cartProduct="shirt">
@@ -89,7 +94,12 @@
                     <h3>Shirts</h3>
                     <p>Stock: 15 <span> $24.00</span></p>
                     <p>Subtotal: $24.00</p>
-                    <p>1 units</p>
+                    <div class="unidades" data-producto="shirt">
+                        <i class="fa-solid fa-square-minus btn-menos" data-producto="restar-shirt"></i>
+                        <p>1 units</p>
+                        <i class="fa-solid fa-square-plus btn-mas" data-producto="sumar-shirt"></i>
+                        <i class="fa-solid fa-trash btn-borrar" data-producto="borrar-shirt"></i>
+                    </div>
                 </div>
             </div>
             <div class="carrito-container noSelected" data-cartProduct="sweatshirt">
@@ -100,7 +110,12 @@
                     <h3>Sweatshirts</h3>
                     <p>Stock: 20 <span> $23.00</span></p>
                     <p>Subtotal: $23.00</p>
-                    <p>1 units</p>
+                    <div class="unidades" data-producto="sweatshirt">
+                        <i class="fa-solid fa-square-minus btn-menos" data-producto="restar-sweatshirt"></i>
+                        <p>1 units</p>
+                        <i class="fa-solid fa-square-plus btn-mas" data-producto="sumar-sweatshirt"></i>
+                        <i class="fa-solid fa-trash btn-borrar" data-producto="borrar-sweatshirt"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +129,7 @@
         </div>
     </div>
 
-    <ul class="filtro">
+    <ul class="filtro" id="products">
         <li id="all" data-product="all">
             <h3>Show all</h3>
             <p>show all products</p>

@@ -3,15 +3,22 @@ const menu = document.getElementById('btn-menu');
 const nav = document.getElementById('navegacion');
 const cerrar = document.getElementById('btn-close') 
 
+const aHome = document.getElementById('a-home');
+const aProducts = document.getElementById('a-products');
+
 menu.addEventListener('click', ()=>{
     nav.style.transform = "translateX(0)";
-    nav.style.transition =  "all 800ms ease";
-})
+    nav.style.transition =  "all 800ms ease"; 
+});
 
-cerrar.addEventListener('click', ()=>{
+const quitar = ()=>{
     nav.style.transform = "translateX(100%)";
-    /* nav.style.transition =  "all 800ms ease"; */
-})
+    
+};
+
+cerrar.addEventListener('click', quitar);
+aHome.addEventListener('click', quitar);
+aProducts.addEventListener('click', quitar);
 
 /* carrito */
 
@@ -119,17 +126,22 @@ const mostrarCarritoProducts = ()=>{
 
 /* element es el contenedor donde haremos la suma */
 
+
+/* ACCEDEMOS A LAS UNIDADES Y EL SUBTOTAL */
+let unidadesTotales;
+let precioTotal;
+
 const sumarUnidades = (element,product) => {
     /* obtenemos el container donde está el texto a cambiar (texto-product)*/
+    
     const infoProducto = element.lastElementChild;
 
-    /* obtenemos la p donde se hará el cambio */
-    const unitsProducto = infoProducto.lastElementChild;
+    /* VAMOS AL DIV DONDE ESTA LA p de units */
+     const unidades = infoProducto.lastElementChild;
+     /* obtenemos la p donde se hará el cambio */
+     const unitsProducto = unidades.children[1];
     const subTotalProducto = infoProducto.children[2];
-    
-    //cantidad = 2
-    //cantTotal = 2
-  
+
     for (const x in products) {
         if(products[x].nombre === product){
             products[x].cantidad++;
@@ -141,8 +153,8 @@ const sumarUnidades = (element,product) => {
         };
     };
     /* SUMAMOS LAS CANTIDADES Y SUBTOTALES PARA PONER LOS TOTALES ABAJO */
-    const unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
-    const precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
+    unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
+    precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
 
     itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
     itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
@@ -175,4 +187,89 @@ btnSweatshirt.addEventListener('click', añadirElemento);
 
 /* CAMBIAR LOS ITEMS Y EL TOTAL */
 
-itemsPrecio = document.getElementById('items-precios');
+const itemsPrecio = document.getElementById('items-precios');
+
+
+
+/* BOTONES MÁS, MENOS Y ELIMINAR */
+
+const btnMenos = document.querySelectorAll('.btn-menos');
+
+const btnMas = document.querySelectorAll('.btn-mas');
+const btnBorrar = document.querySelectorAll('.btn-borrar');
+
+const operar = event =>{
+    /* obtenemos data para ver si es sumar o restar y qué producto es */
+    const productoActual = event.target.dataset.producto;
+    /* acceder al html donde esta units que es el hermano siguiente */
+    let units;
+    /* acceder al subtotal que es el hermano anterior al padre*/
+    const subTotal = event.target.parentNode.previousElementSibling;
+
+    const padreContainer = event.target.parentNode.parentNode.parentNode;
+
+/* quitamos el restar- y sumar- por conflicto con nombre (shirt)*/
+        let productoFinal = productoActual.slice(productoActual.indexOf('-')+1);
+
+        for (const x in products) {
+         if (productoFinal == products[x].nombre) {
+             if (productoActual.includes('restar')) {
+                 units = event.target.nextElementSibling;
+                products[x].cantidad--;
+                products[x].subtotal-=products[x].precio;
+                contadorCarrito--;
+                contCarrito.textContent = contadorCarrito;
+                units.textContent = `${products[x].cantidad} units`;
+            subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
+             } else if(productoActual.includes('sumar')){
+                 units = event.target.previousElementSibling;
+                products[x].cantidad++;
+                products[x].subtotal+=products[x].precio;
+                contadorCarrito++;
+                contCarrito.textContent = contadorCarrito;
+                units.textContent = `${products[x].cantidad} units`;
+                subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
+             } else{
+                padreContainer.classList.add('noSelected');
+                contadorCarrito-=products[x].cantidad;
+                contCarrito.textContent = contadorCarrito;
+                products[x].cantidad=0;
+                products[x].subtotal=0;
+             }
+
+            unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
+            precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
+
+            itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
+            itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
+        }      
+        }  
+    
+};
+
+const resetearProducto = event =>{
+
+    /* OBTENEMOS LA UBICACION DEL OBJETO */
+
+    /* LE HACEMOS DISPLAY NONE AL ELEMENTO */
+
+    /* DEVOLVEMOS SUS VALORES A 0 */
+
+    unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
+    precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
+    itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
+    itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
+}
+
+btnMenos.forEach(x=>x.addEventListener('click', operar));
+btnMas.forEach(x=>x.addEventListener('click', operar));
+btnBorrar.forEach(x=>x.addEventListener('click', operar));
+
+
+
+/* btnMenos.addEventListener('click', operar);
+btnMas.addEventListener('click', operar); */
+
+
+
+
