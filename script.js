@@ -149,9 +149,7 @@ const sumarUnidades = (element,product) => {
     for (const x in products) {
         if(products[x].nombre === product){
             products[x].cantidad++;
-            cantidadActual = products[x].cantidad;
             products[x].subtotal+=products[x].precio;
-            subTotalActual = products[x].subtotal;
             unitsProducto.textContent = `${products[x].cantidad} units`;
             subTotalProducto.textContent = `Subtotal: $${products[x].subtotal}.00`
         };
@@ -262,17 +260,40 @@ const operar = event =>{
 };
 
 const resetearCarrito = event =>{
-        /* FALTAAA */
-    /* OBTENEMOS LA UBICACION DEL OBJETO */
-    /* LE HACEMOS DISPLAY NONE AL ELEMENTO */
-    /* DEVOLVEMOS SUS VALORES A 0 */
 
-    mostrarCarritoProducts();
+    /* RESETAMOS CARRITO */
+    contadorCarrito=0;
+    contCarrito.textContent = contadorCarrito;
 
+    /* RESETEAMOS LOS OBJETOS */
+    
+    /* DISPLAY NONE A CADA PRODUCTO */
+    let i = 0;
+    for (const x of carritoContainers) {
+        x.classList.add('noSelected');
+        /* RESETEO DE VALORES */
+        const infoProducto = x.lastElementChild;
+        const unidades = infoProducto.lastElementChild;
+        const unitsProducto = unidades.children[1];
+        const subTotalProducto = infoProducto.children[2];
+        
+        products[i].cantidad=0;
+        products[i].subtotal=0;
+        unitsProducto.textContent = `${products[i].cantidad} units`;
+        subTotalProducto.textContent = `Subtotal: $${products[i].subtotal}.00`
+        i++;
+    }
+    
+    /* PONEMOS LOS VALORES GENERALES EN 0 */
     unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
     precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
     itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
     itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
+
+    /* OCULTAMOS EL CARRITO Y MOSTRAMOS EL EMPTY */
+    mostrarCarritoProducts();
+    checkout.classList.remove('btn-checkout');
+    alert('Compra realizada con éxito');
 }
 
 btnMenos.forEach(x=>x.addEventListener('click', operar));
