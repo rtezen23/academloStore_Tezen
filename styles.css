@@ -191,18 +191,19 @@ body{
     justify-content: flex-end;
 }
 
-.carrito-checkout button{
+button{
     padding: 1.5rem;
     font-size: 1rem;
     border-style: none;
     color: #555;
-    background-color: #aaa;
+    background-color: #bbb;
 }
 
-button .enable{
-    background-color: red;
-    color: blue;
+.btn-checkout{
+    background-color: #222;
+    color: #fff;
     cursor: pointer;
+    box-shadow: 5px 5px 5px #fff;
 }
 
 /* CARRITO PRODUCTS*/

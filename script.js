@@ -118,9 +118,11 @@ const mostrarCarritoProducts = ()=>{
     if (estadoCart == false) {
         emptyCarrito.classList.add('oculto');
         carritoProducts.classList.remove('oculto');
+        estadoCart = true;
     } else {
         emptyCarrito.classList.remove('oculto');
         carritoProducts.classList.add('oculto');
+        estadoCart = false;
     }
 };
 
@@ -170,7 +172,10 @@ let contadorCarrito = 0;
 const checkout = document.getElementById('checkout');
 const añadirElemento = event => {
     /*QUITAR SECCION DE VACIO Y MOSTRAR SECCION DE PRODUCTOS */
-    mostrarCarritoProducts();
+    if (estadoCart==false) {
+        mostrarCarritoProducts();
+        checkout.classList.add('btn-checkout');
+    }
     contadorCarrito++;
     contCarrito.textContent = contadorCarrito;
     /* MOSTRAR PRODUCTO ELEGIDO */
@@ -192,8 +197,6 @@ btnSweatshirt.addEventListener('click', añadirElemento);
 
 const itemsPrecio = document.getElementById('items-precios');
 
-
-
 /* BOTONES MÁS, MENOS Y ELIMINAR */
 
 const btnMenos = document.querySelectorAll('.btn-menos');
@@ -212,7 +215,8 @@ const operar = event =>{
 
     const padreContainer = event.target.parentNode.parentNode.parentNode;
 
-/* quitamos el restar- y sumar- por conflicto con nombre (shirt)*/
+  
+    /* quitamos el restar- y sumar- por conflicto con nombre (shirt)*/
         let productoFinal = productoActual.slice(productoActual.indexOf('-')+1);
 
         for (const x in products) {
@@ -249,22 +253,21 @@ const operar = event =>{
             itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
 
             if(unidadesTotales==0){
-                estadoCart = false;
-                console.log(estadoCart);
                 mostrarCarritoProducts();
-            } else estadoCart = true;
+                checkout.classList.remove('btn-checkout');
+            }
         }      
         }  
     
 };
 
-const resetearProducto = event =>{
-
+const resetearCarrito = event =>{
+        /* FALTAAA */
     /* OBTENEMOS LA UBICACION DEL OBJETO */
-
     /* LE HACEMOS DISPLAY NONE AL ELEMENTO */
-
     /* DEVOLVEMOS SUS VALORES A 0 */
+
+    mostrarCarritoProducts();
 
     unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
     precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
@@ -276,7 +279,7 @@ btnMenos.forEach(x=>x.addEventListener('click', operar));
 btnMas.forEach(x=>x.addEventListener('click', operar));
 btnBorrar.forEach(x=>x.addEventListener('click', operar));
 
-
+checkout.addEventListener('click', resetearCarrito);
 
 /* btnMenos.addEventListener('click', operar);
 btnMas.addEventListener('click', operar); */
