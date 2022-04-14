@@ -20,6 +20,16 @@ cerrar.addEventListener('click', quitar);
 aHome.addEventListener('click', quitar);
 aProducts.addEventListener('click', quitar);
 
+/* darktheme */
+const body = document.getElementById('body');
+const themeIcon = document.getElementById('theme-icon');
+const logo = document.getElementById('logo');
+
+themeIcon.addEventListener('click', ()=>{
+    body.classList.toggle('darktheme')
+    logo.src = "img/favicon.ico";
+});
+
 /* carrito */
 
 const abrirCarrito = document.getElementById('cart');

@@ -1,3 +1,12 @@
+:root{
+    --fondo:#eaeaea;
+    --logo: #000;
+    --texto: #090909;
+    --precio-header: #f55;
+    --fondo-fuerte: #ccc;
+    --tacho: #e00;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -6,8 +15,18 @@
 
 body{
     padding: 1rem;
-    background-color: #eaeaea;
+    background-color: var(--fondo);
     font-family: sans-serif;
+    color: var(--texto);
+}
+
+.darktheme{
+    --fondo: #113;
+    --logo: #fff;
+    --texto: #fafafa;
+    --precio-header: #09b;
+    --fondo-fuerte: rgb(11, 11, 32);
+    --tacho: rgb(101, 101, 221);
 }
 
 .nav{
@@ -21,7 +40,7 @@ body{
     text-decoration: none;
     align-items: center;
     gap: 1rem;
-    color: #000;
+    color: var(--logo);
 }
 
 /* MENU */
@@ -32,7 +51,7 @@ body{
     top: 0;
     left: 0;
     z-index: 100;
-    background-color: #eaeaea;
+    background-color: var(--fondo);
     padding: 4rem 2rem;
     transform: translateX(100%); /* moverl  */
 
@@ -50,7 +69,7 @@ body{
 .nav-navegacion ul li{
     margin-top: 2rem;
     font-size: 1.8rem;
-    color: #555;
+    color: var(--texto);
 }
 
 .nav-navegacion>b,
@@ -60,7 +79,7 @@ body{
     right: 0;
     margin: 1.5rem 1.5rem 0 0;
     font-size: 2rem;
-    color: #555;
+    color: var(--texto);
     font-weight: bold;
     cursor: pointer;
 }
@@ -73,12 +92,12 @@ body{
 
 .nav-carrito i{
     font-size: 1.4rem;
-    color: #777;
+    color: var(--texto);
     cursor: pointer;
 }
 
 .nav-carrito i:hover{
-    color: #000;
+    color: var(--logo);
 }
 
 .nav-carrito>div{
@@ -91,9 +110,9 @@ body{
 
 .nav-carrito>div>b{
     font-size: .7rem;
-    color: #fff;
+    color: var(--fondo);
     padding-top: 3px;
-    background-color: #000;
+    background-color: var(--logo);
     border-radius: 50%;
     width: 17px;
     height: 17px;
@@ -118,7 +137,7 @@ body{
 }
 
 .encabezado-texto>span{
-    color: #f55;
+    color: var(--precio-header);
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -136,15 +155,16 @@ body{
 
 .buttons .btn-discover{
     width: 40%;
-    background-color: #ccc;
+    background-color: var(--fondo-fuerte);
+    color: var(--texto);
     padding: 1rem;
     height: 70%;
 }
 
 .buttons .btn-add{
     width: 60%;
-    background-color: #222;
-    color: #fff;
+    background-color: var(--logo);
+    color: var(--fondo);
     padding: 1.5rem;
 }
 
@@ -162,7 +182,7 @@ body{
     width: 100%;
     height: 100vh;
     z-index: 100;
-    background-color: #eaeaea;
+    background-color: var(--fondo);
     transform: translateX(100%);
     top: 0;
     left: 0;
@@ -195,15 +215,15 @@ button{
     padding: 1.5rem;
     font-size: 1rem;
     border-style: none;
-    color: #555;
-    background-color: #bbb;
+    color: var(--texto);
+    background-color: var(--fondo-fuerte);
 }
 
 .btn-checkout{
-    background-color: #222;
-    color: #fff;
+    background-color: var(--texto);
+    color: var(--fondo-fuerte);
     cursor: pointer;
-    box-shadow: 5px 5px 5px #fff;
+    box-shadow: 5px 5px 5px var(--fondo);
 }
 
 /* CARRITO PRODUCTS*/
@@ -244,6 +264,7 @@ button{
     margin: 0;
     font-size: 1rem;
     text-align: start;
+    color: var(--logo);
 }
 
 .texto-product .unidades{
@@ -257,15 +278,16 @@ button{
 .unidades .fa-solid{
     font-size: 1.5rem;
     cursor: pointer;
+    color: var(--precio-header);
 }
 
 .unidades .fa-trash{
-    color: #f00;
+    color: var(--tacho);
     margin-left: 3rem;
 }
 
 .texto-product .unidades p{
-    color: #000;
+    color: var(--texto);
 }
 
 
@@ -288,7 +310,7 @@ button{
 
 .filtro>li:hover{
     cursor: pointer;
-    color: #66f;
+    color: var(--tacho);
 }
 
     /* a los que no seleccionamos */
@@ -309,7 +331,7 @@ button{
 
 .productos__img{
     text-align: center;
-    background-color: #ccc;
+    background-color: var(--fondo-fuerte);
     border-radius: 14px 14px 0 0;
 }
 
@@ -323,7 +345,7 @@ button{
     position: relative;
     justify-content: space-between;
     font-size: 1rem;
-    background-color: #fff;
+    background-color: var(--fondo);
     padding: 1rem;
     border-radius: 0 0 14px 14px;
 }
@@ -349,7 +371,7 @@ button{
 /* FOOTER */
 footer{
     margin-top: 6rem;
-    background-color: #ccc;
+    background-color: var(--fondo-fuerte);
     padding: 4rem 1rem 1rem;
 }
 
@@ -366,11 +388,11 @@ footer{
 
 .footer-info h3{
     margin-bottom: 1rem;
-    color: #000;
+    color: var(--logo);
 }
 
 .footer-info>*>*{ /* todos los elementos dentro de cada contenedor */
-    color: #555;
+    color: var(--texto);
 }
 
 .footer-info .about ul,
