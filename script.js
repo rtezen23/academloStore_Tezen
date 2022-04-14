@@ -116,10 +116,12 @@ let estadoCart = false;
 /* QUITAR EL DIV DE CARRITO VACIO Y PONER EL DIV DE PRODUCTOS */
 const mostrarCarritoProducts = ()=>{
     if (estadoCart == false) {
-        emptyCarrito.classList.toggle('oculto');
-        carritoProducts.classList.toggle('oculto');
-        estadoCart = true;
-    } 
+        emptyCarrito.classList.add('oculto');
+        carritoProducts.classList.remove('oculto');
+    } else {
+        emptyCarrito.classList.remove('oculto');
+        carritoProducts.classList.add('oculto');
+    }
 };
 
 /* ACCEDEMOS A TODOS LOS CONTAINER DE LOS PRODUCTOS */
@@ -165,6 +167,7 @@ const carritoContainers = document.querySelectorAll('.carrito-container');
 const contCarrito = document.getElementById('cont-carrito');
 let contadorCarrito = 0;
 
+const checkout = document.getElementById('checkout');
 const añadirElemento = event => {
     /*QUITAR SECCION DE VACIO Y MOSTRAR SECCION DE PRODUCTOS */
     mostrarCarritoProducts();
@@ -199,6 +202,7 @@ const btnMas = document.querySelectorAll('.btn-mas');
 const btnBorrar = document.querySelectorAll('.btn-borrar');
 
 const operar = event =>{
+    
     /* obtenemos data para ver si es sumar o restar y qué producto es */
     const productoActual = event.target.dataset.producto;
     /* acceder al html donde esta units que es el hermano siguiente */
@@ -235,6 +239,7 @@ const operar = event =>{
                 contCarrito.textContent = contadorCarrito;
                 products[x].cantidad=0;
                 products[x].subtotal=0;
+                
              }
 
             unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
@@ -242,6 +247,12 @@ const operar = event =>{
 
             itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
             itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
+
+            if(unidadesTotales==0){
+                estadoCart = false;
+                console.log(estadoCart);
+                mostrarCarritoProducts();
+            } else estadoCart = true;
         }      
         }  
     
