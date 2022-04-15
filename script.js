@@ -11,10 +11,7 @@ menu.addEventListener('click', ()=>{
     nav.style.transition =  "all 800ms ease"; 
 });
 
-const quitar = ()=>{
-    nav.style.transform = "translateX(100%)";
-    
-};
+const quitar = ()=>{ nav.style.transform = "translateX(100%)";};
 
 cerrar.addEventListener('click', quitar);
 aHome.addEventListener('click', quitar);
@@ -41,61 +38,51 @@ abrirCarrito.addEventListener('click', ()=>{
     carrito.style.transition =  "all 800ms ease";
 })
 
-cerrar_carrito.addEventListener('click', ()=>{
-    carrito.style.transform = "translateX(100%)";
-    /* nav.style.transition =  "all 800ms ease"; */
-})
+cerrar_carrito.addEventListener('click', ()=>{carrito.style.transform = "translateX(100%)";})
 
-/* FILTRO */
-const productos = document.getElementById('section-productos');
-const liAll = document.getElementById('all')
+/* FILTRAR PRODUCTOS*/
+const productos = document.getElementById('section-productos'); /* CONTENEDOR DE LOS PRODUCTOS A FILTRAR */
+/* CADA BOTON DE FILTRADO */
+const liAll = document.getElementById('all') 
 const liHoodies = document.getElementById('hoodies');
 const liShirts = document.getElementById('shirts');
 const liSweatshirts = document.getElementById('sweatshirts');
-/* CADA PRODUCTO */
+/* CADA CONTENEDOR DE CADA PRODUCTO */
 const productosContainers = productos.children;
 
-/* NODELIST FOR IN PARA RECORRER*/
-    /* const productosContainers = document.querySelectorAll(".productos-container");
-    console.log(productosContainers); */
-    /* HTML COLLECTION FOR OF*/
-    
+/* FILTRADO DE PRODUCTOS: A cada li donde están las opciones de filtrado les ponemos un data con el nombre
+de c/pruducto y a los container de cada producto también les ponemos un data con el nombre que corresponda */
+
+    /* Obtenemos cada contenedor de cada producto que tenga la class .noSelected y si la tiene se la quitamos,
+    esto es para resetear los elementos cada vez que se hace un filtrado (esta clase tiene display:none)*/
     function mostrarEliminados(){
         const noElegidos = document.querySelectorAll('.noSelected');
-        /* if (selected) selected.classList.remove('noSelected'); */
-        noElegidos.forEach(element => {
-            if (element) element.classList.remove('noSelected');
-        });
-        
-    }
-
-const filtrarOpcion = event => {
-    /* target hacía referencia a su hijo h3, así que puse current */
-    const eleccion = event.currentTarget.dataset.product;
-    mostrarEliminados();
-    
-    for (const x of productosContainers) {
-        if(x.dataset.product !== eleccion && eleccion !=='all'){
-            x.classList.add('noSelected');
+        noElegidos.forEach(element => {if (element) element.classList.remove('noSelected');});
+    };
+    /* FUNCION PARA FILTRAR CADA CONTENEDOR DE PRODUCTO */
+    const filtrarOpcion = event => {
+        const eleccion = event.currentTarget.dataset.product; /* obtenemos los data del event(producto container actual)*/
+        mostrarEliminados(); /* mostramos todos los elementos para comenzar a filtrar */
+        for (const x of productosContainers) { /* Recorremos cada product container */
+            /* si no coincide el nombre del data del contenedor con la data del <li> donde filtramos, entonces
+            no lo mostramos agregando la clase noSelected, así que solo nos mostraría los elementos que buscamos*/
+            if(x.dataset.product !== eleccion && eleccion !=='all') x.classList.add('noSelected');
         }
-    }
-};
+    };
+    /* CADA BOTON LI QUE HARÁ EL FILTRADO */
+    liAll.addEventListener('click', filtrarOpcion); /* li data all */
+    liHoodies.addEventListener('click', filtrarOpcion); /* li data hoodie */
+    liShirts.addEventListener('click', filtrarOpcion); /* li data shirt */
+    liSweatshirts.addEventListener('click', filtrarOpcion); /* li data sweatshirt */
 
-    liAll.addEventListener('click', filtrarOpcion);
-    liHoodies.addEventListener('click', filtrarOpcion);
-    liShirts.addEventListener('click', filtrarOpcion);
-    liSweatshirts.addEventListener('click', filtrarOpcion);
-
-
-/* ADICIONAR ELEMENTOS */
-
+/* OBJETOS CON LA INFO DE CADA PRODUCTO QUE IRÁN CAMBIANDO MIENTRAS AVANCE EL PROGRAMA */
     const products = [{
         nombre: "hoodie",
         precio: 14,
         stock: 10,
         cantidad: 0,
         subtotal: 0
-        /* imagen: 'img/featured2.png' */
+        /* imagen: 'img/featured1.png' */
     },
     {
         nombre: "shirt",
@@ -111,19 +98,18 @@ const filtrarOpcion = event => {
         stock: 20,
         cantidad: 0,
         subtotal: 0
-        /* imagen: 'img/featured2.png' */
+        /* imagen: 'img/featured3.png' */
     }]
 
-btnHoodie = document.getElementById('btn-hoodie');
-btnShirt = document.getElementById('btn-shirt');
-btnSweatshirt = document.getElementById('btn-sweatshirt');
 
+/* el div que mostramos cuando no hay ningún producto y el div que mostramos cuando añadimos productos al cart */
 emptyCarrito = document.getElementById('empty-carrito');
 carritoProducts = document.getElementById('carrito-products');
-
+/* inicializamos en falso el estado del div donde se muestran los productos porque este solo se muestra
+cuando añadimos algún producto*/
 let estadoCart = false;
 
-/* QUITAR EL DIV DE CARRITO VACIO Y PONER EL DIV DE PRODUCTOS */
+/* QUITAR EL DIV DE CARRITO VACIO Y PONER EL DIV DE PRODUCTOS Y VICESERVA, dependiendo del estado actual del cart*/
 const mostrarCarritoProducts = ()=>{
     if (estadoCart == false) {
         emptyCarrito.classList.add('oculto');
@@ -136,94 +122,87 @@ const mostrarCarritoProducts = ()=>{
     }
 };
 
-/* ACCEDEMOS A TODOS LOS CONTAINER DE LOS PRODUCTOS */
-
-/* element es el contenedor donde haremos la suma */
-
-
-/* ACCEDEMOS A LAS UNIDADES Y EL SUBTOTAL */
+/* Declaramos variables para el total de unidades de los productos (suma de cantidad) seleccionados y su precio total
+(suma de subtotales), esto lo obtendremos al manipular los objetos de cada producto*/
 let unidadesTotales;
 let precioTotal;
 
+/* SUMAMOS LAS UNIDADES, como parámetros tenemos el contenedor que queremos agregar y el data, osea el nombre del producto */
 const sumarUnidades = (element,product) => {
-    /* obtenemos el container donde está el texto a cambiar (texto-product)*/
-    
+    /* obtenemos el container donde está el texto a cambiar (texto-product), en este están los datos del producto*/
     const infoProducto = element.lastElementChild;
-
-    /* VAMOS AL DIV DONDE ESTA LA p de units */
-     const unidades = infoProducto.lastElementChild;
-     /* obtenemos la p donde se hará el cambio */
-     const unitsProducto = unidades.children[1];
+    /* Obtenemos el p donde está el subtotal */
     const subTotalProducto = infoProducto.children[2];
-
-    for (const x in products) {
-        if(products[x].nombre === product){
-            products[x].cantidad++;
+    /* VAMOS AL DIV DONDE ESTA LA p de units (unidades), el está junto a los íconos de - y + */
+    const unidades = infoProducto.lastElementChild;
+    /* obtenemos la p donde se hará el cambio de unidades*/
+    const unitsProducto = unidades.children[1];
+    
+    for (const x in products) { /* Recorremos nuestro arreglo de objetos con la info de c/producto */
+        if(products[x].nombre === product){ /* si el nombre del objeto coincide con la data del btn ... */
+            products[x].cantidad++; /* Aumentamos sus valores y los ponemos en el html */
             products[x].subtotal+=products[x].precio;
             unitsProducto.textContent = `${products[x].cantidad} units`;
             subTotalProducto.textContent = `Subtotal: $${products[x].subtotal}.00`
         };
     };
-    /* SUMAMOS LAS CANTIDADES Y SUBTOTALES PARA PONER LOS TOTALES ABAJO */
+    /* SUMAMOS LAS CANTIDADES Y SUBTOTALES PARA PONER LOS VALORES TOTALES DE LOS PRODUCTOS EN EL HTML ABAJO */
     unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
     precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
-
     itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
     itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
 }
 
-/* MOSTRAR EN EL CARRITO LOS PRODUCTOS */
-const carritoContainers = document.querySelectorAll('.carrito-container');
-const contCarrito = document.getElementById('cont-carrito');
-let contadorCarrito = 0;
+/* MOSTRAR EN EL DIV DEL CARRITO LOS PRODUCTOS SELECCIONADOS */
+const carritoContainers = document.querySelectorAll('.carrito-container'); /* Lista de cada contenedor de product */
+const contCarrito = document.getElementById('cont-carrito'); /* contador del icono de carrito en la nav */
+    let contadorCarrito = 0; /* variable que será la que asignemos al contador del icono de carrito */
+const checkout = document.getElementById('checkout'); /* boton para realizar la compra */
 
-const checkout = document.getElementById('checkout');
 const añadirElemento = event => {
-    /*QUITAR SECCION DE VACIO Y MOSTRAR SECCION DE PRODUCTOS */
-    if (estadoCart==false) {
+    if (estadoCart==false) { /* si no está activa el div de los productos mostrarlo y activar el boton de compra */
         mostrarCarritoProducts();
         checkout.classList.add('btn-checkout');
     }
-    contadorCarrito++;
-    contCarrito.textContent = contadorCarrito;
-    /* MOSTRAR PRODUCTO ELEGIDO */
-    const productoActual = event.target.dataset.cartproduct;
-    for (const x of carritoContainers) {
-        if(x.dataset.cartproduct == productoActual){
+    contadorCarrito++; /* sumamos 1 al contador del ícono de cart */
+    contCarrito.textContent = contadorCarrito; /* cambiamos el valor en el html */
+    const productoActual = event.target.dataset.cartproduct; /* data del producto seleccionado(hoddie, shirt,etc) */
+    for (const x of carritoContainers) { /* recorremos cada contenedor de productos */
+    /* si su data y la del producto que queremos agregar son iguales entonces lo muestra al quitarle el
+    noSelected, porque pusimos que todos así (osea que no se muestren)) */
+        if(x.dataset.cartproduct == productoActual){ 
             x.classList.remove('noSelected');
-            sumarUnidades(x, productoActual);
+            sumarUnidades(x, productoActual); /* le pasamos el contenedor del producto y el data del btn que coincide */
         }
     }
     
 }
-
+/* CADA BOTON DE CADA PRODUCTO PARA AGREGAR AL CARRITO */
+btnHoodie = document.getElementById('btn-hoodie');
+btnShirt = document.getElementById('btn-shirt');
+btnSweatshirt = document.getElementById('btn-sweatshirt');
+/* función a cada btn */
 btnHoodie.addEventListener('click', añadirElemento);
 btnShirt.addEventListener('click', añadirElemento);
 btnSweatshirt.addEventListener('click', añadirElemento);
 
 /* CAMBIAR LOS ITEMS Y EL TOTAL */
-
 const itemsPrecio = document.getElementById('items-precios');
 
 /* BOTONES MÁS, MENOS Y ELIMINAR */
-
 const btnMenos = document.querySelectorAll('.btn-menos');
-
 const btnMas = document.querySelectorAll('.btn-mas');
 const btnBorrar = document.querySelectorAll('.btn-borrar');
 
 const operar = event =>{
-    
     /* obtenemos data para ver si es sumar o restar y qué producto es */
     const productoActual = event.target.dataset.producto;
     /* acceder al html donde esta units que es el hermano siguiente */
     let units;
     /* acceder al subtotal que es el hermano anterior al padre*/
     const subTotal = event.target.parentNode.previousElementSibling;
-
     const padreContainer = event.target.parentNode.parentNode.parentNode;
 
-  
     /* quitamos el restar- y sumar- por conflicto con nombre (shirt)*/
         let productoFinal = productoActual.slice(productoActual.indexOf('-')+1);
 
@@ -251,9 +230,7 @@ const operar = event =>{
                 contCarrito.textContent = contadorCarrito;
                 products[x].cantidad=0;
                 products[x].subtotal=0;
-                
              }
-
             unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
             precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
 
@@ -266,11 +243,9 @@ const operar = event =>{
             }
         }      
         }  
-    
 };
 
 const resetearCarrito = event =>{
-
     /* RESETAMOS CARRITO */
     contadorCarrito=0;
     contCarrito.textContent = contadorCarrito;
