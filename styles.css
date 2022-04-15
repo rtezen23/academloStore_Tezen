@@ -77,7 +77,7 @@ body{
     position: absolute;
     top: 0;
     right: 0;
-    margin: 1.5rem 1.5rem 0 0;
+    margin: 2.7rem 2.7rem 0 0;
     font-size: 2rem;
     color: var(--texto);
     font-weight: bold;
@@ -104,10 +104,6 @@ body{
     position: relative;
 }
 
-.nav-carrito>div{
-    position: relative;
-}
-
 .nav-carrito>div>b{
     font-size: .7rem;
     color: var(--fondo);
@@ -120,6 +116,7 @@ body{
     top: 14px;
     right: -7px;
     text-align: center;
+    cursor: pointer;
 }
 
 /* ENCABEZADO */
@@ -315,7 +312,7 @@ button{
 
     /* a los que no seleccionamos */
     /* puse otra clase (oculto) porque tuve conflictos en js */
-.noSelected, .oculto{
+.noSelected, .noSelected2, .oculto{
   display: none;
 }
 

@@ -6,9 +6,12 @@ const cerrar = document.getElementById('btn-close')
 const aHome = document.getElementById('a-home');
 const aProducts = document.getElementById('a-products');
 
+const cartIcono = document.getElementById('cart-icono');
+
 menu.addEventListener('click', ()=>{
     nav.style.transform = "translateX(0)";
     nav.style.transition =  "all 800ms ease"; 
+    cartIcono.style.zIndex = "100";
 });
 
 const quitar = ()=>{ nav.style.transform = "translateX(100%)";};
@@ -29,7 +32,7 @@ themeIcon.addEventListener('click', ()=>{
 
 /* carrito */
 
-const abrirCarrito = document.getElementById('cart');
+const abrirCarrito = document.getElementById('cart-icono');
 const carrito = document.getElementById('carrito');
 const cerrar_carrito = document.getElementById('btn-close-cart');
 
@@ -56,8 +59,8 @@ de c/pruducto y a los container de cada producto también les ponemos un data co
     /* Obtenemos cada contenedor de cada producto que tenga la class .noSelected y si la tiene se la quitamos,
     esto es para resetear los elementos cada vez que se hace un filtrado (esta clase tiene display:none)*/
     function mostrarEliminados(){
-        const noElegidos = document.querySelectorAll('.noSelected');
-        noElegidos.forEach(element => {if (element) element.classList.remove('noSelected');});
+        const noElegidos = document.querySelectorAll('.noSelected2');
+        noElegidos.forEach(element => {if (element) element.classList.remove('noSelected2');});
     };
     /* FUNCION PARA FILTRAR CADA CONTENEDOR DE PRODUCTO */
     const filtrarOpcion = event => {
@@ -65,8 +68,8 @@ de c/pruducto y a los container de cada producto también les ponemos un data co
         mostrarEliminados(); /* mostramos todos los elementos para comenzar a filtrar */
         for (const x of productosContainers) { /* Recorremos cada product container */
             /* si no coincide el nombre del data del contenedor con la data del <li> donde filtramos, entonces
-            no lo mostramos agregando la clase noSelected, así que solo nos mostraría los elementos que buscamos*/
-            if(x.dataset.product !== eleccion && eleccion !=='all') x.classList.add('noSelected');
+            no lo mostramos agregando la clase noSelected2, así que solo nos mostraría los elementos que buscamos*/
+            if(x.dataset.product !== eleccion && eleccion !=='all') x.classList.add('noSelected2');
         }
     };
     /* CADA BOTON LI QUE HARÁ EL FILTRADO */
@@ -213,6 +216,9 @@ const operar = event =>{
         for (const x in products) { /* recorremos los objetos */
          if (productoFinal == products[x].nombre) { /* si coincide la data con el nombre del objeto */
              if (productoActual.includes('restar')) {
+                 if (products[x].cantidad ==1) {
+                    padreContainer.classList.add('noSelected');
+                 }
                 /* ubicamos el html de units y le restamos los valores */
                 units = event.target.nextElementSibling;
                 products[x].cantidad--;
