@@ -126,6 +126,8 @@ const mostrarCarritoProducts = ()=>{
 (suma de subtotales), esto lo obtendremos al manipular los objetos de cada producto*/
 let unidadesTotales;
 let precioTotal;
+/* CONTENEDOR DONDE ESTÁN LAS UNIDADES TOTALES Y EL PRECIO TOTAL */
+const itemsPrecio = document.getElementById('items-precios');
 
 /* SUMAMOS LAS UNIDADES, como parámetros tenemos el contenedor que queremos agregar y el data, osea el nombre del producto */
 const sumarUnidades = (element,product) => {
@@ -186,82 +188,96 @@ btnHoodie.addEventListener('click', añadirElemento);
 btnShirt.addEventListener('click', añadirElemento);
 btnSweatshirt.addEventListener('click', añadirElemento);
 
-/* CAMBIAR LOS ITEMS Y EL TOTAL */
-const itemsPrecio = document.getElementById('items-precios');
-
 /* BOTONES MÁS, MENOS Y ELIMINAR */
 const btnMenos = document.querySelectorAll('.btn-menos');
 const btnMas = document.querySelectorAll('.btn-mas');
 const btnBorrar = document.querySelectorAll('.btn-borrar');
 
 const operar = event =>{
-    /* obtenemos data para ver si es sumar o restar y qué producto es */
+    /* obtenemos la data de los botones para saber qué producto y acción es.
+    Podemos saber estas 2 cosas porque el formato es (ejem: data='restar-hoodie') */
     const productoActual = event.target.dataset.producto;
-    /* acceder al html donde esta units que es el hermano siguiente */
+    /* acceder al html donde están las unidades, no le damos valor,
+    porque esto cambia dependiendo la posición del botón donde nos
+    encontramos (está después del boton restar, antes de sumar). */
     let units;
-    /* acceder al subtotal que es el hermano anterior al padre*/
+    /* acceder al html del subtotal que es el hermano anterior al padre*/
     const subTotal = event.target.parentNode.previousElementSibling;
+    /* accedemos al padre del padre del padre jaja que es el carrito-container*/
     const padreContainer = event.target.parentNode.parentNode.parentNode;
 
-    /* quitamos el restar- y sumar- por conflicto con nombre (shirt)*/
+    /* quitamos el restar- y sumar- por conflicto con nombre (shirt), porque
+    el sweatshirt se sumaba 2 veces al contener la palabra shirt también */
         let productoFinal = productoActual.slice(productoActual.indexOf('-')+1);
 
-        for (const x in products) {
-         if (productoFinal == products[x].nombre) {
+        for (const x in products) { /* recorremos los objetos */
+         if (productoFinal == products[x].nombre) { /* si coincide la data con el nombre del objeto */
              if (productoActual.includes('restar')) {
-                 units = event.target.nextElementSibling;
+                /* ubicamos el html de units y le restamos los valores */
+                units = event.target.nextElementSibling;
                 products[x].cantidad--;
                 products[x].subtotal-=products[x].precio;
+                /* restamos los valores del ícono de cart */
                 contadorCarrito--;
                 contCarrito.textContent = contadorCarrito;
+                /* actualizamos los valores en el html de unidades y subtotal*/
                 units.textContent = `${products[x].cantidad} units`;
-            subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
+                subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
              } else if(productoActual.includes('sumar')){
-                 units = event.target.previousElementSibling;
+                 /* igual que el restar pero acá sumamos */
+                units = event.target.previousElementSibling;
                 products[x].cantidad++;
                 products[x].subtotal+=products[x].precio;
                 contadorCarrito++;
                 contCarrito.textContent = contadorCarrito;
                 units.textContent = `${products[x].cantidad} units`;
                 subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
-             } else{
+             } else{ /* operación eliminar */
+                /* quitamos el producto agregando la clase de display none*/
                 padreContainer.classList.add('noSelected');
+                /* restamos la cantidad actual de unidades en el ícono del carrito*/
                 contadorCarrito-=products[x].cantidad;
                 contCarrito.textContent = contadorCarrito;
-                products[x].cantidad=0;
+                products[x].cantidad=0; /* devolvemos los valores del objeto a 0*/
                 products[x].subtotal=0;
              }
+             /* luego de realizar c/operacion, sumamos las unidades y subtotales de c/u
+             para obtener el total de unidades y el precio total */
             unidadesTotales = products.map(item => item.cantidad).reduce((prev, curr) => prev + curr, 0)
             precioTotal = products.map(item => item.subtotal).reduce((prev, curr) => prev + curr, 0)
-
+             /* mostramos en el html estos valores */
             itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
             itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
-
+            /* si ya no hay productos que mostrar, entonces volvemos al
+            div del empty-card y ocultamos este div de productos */
             if(unidadesTotales==0){
                 mostrarCarritoProducts();
-                checkout.classList.remove('btn-checkout');
+                checkout.classList.remove('btn-checkout'); /* desactivamos el boton */
             }
-        }      
+         }      
         }  
 };
+/* recorremos todos los botones de sumar restar y eliminar y a todos
+les aplicamos el evento listener al hacerles click para que operen*/
+btnMenos.forEach(x=>x.addEventListener('click', operar));
+btnMas.forEach(x=>x.addEventListener('click', operar));
+btnBorrar.forEach(x=>x.addEventListener('click', operar));
 
+/* FUNCION AL PRESIONAR EL BOTON DE CHECKOUT, OSEA AL SIMULAR LA COMPRA */
 const resetearCarrito = event =>{
-    /* RESETAMOS CARRITO */
+    /* reseteamos el contador y el icono de carrito */
     contadorCarrito=0;
     contCarrito.textContent = contadorCarrito;
 
-    /* RESETEAMOS LOS OBJETOS */
-    
-    /* DISPLAY NONE A CADA PRODUCTO */
-    let i = 0;
-    for (const x of carritoContainers) {
-        x.classList.add('noSelected');
-        /* RESETEO DE VALORES */
+    let i = 0; /* contador para los objetos, para que se reinicie a la par de c/container */
+    for (const x of carritoContainers) { /* container de c/producto */
+        x.classList.add('noSelected'); /* display none al contenedor */
+        /* Accedemos a las unidades y subTotal del html*/
         const infoProducto = x.lastElementChild;
         const unidades = infoProducto.lastElementChild;
         const unitsProducto = unidades.children[1];
         const subTotalProducto = infoProducto.children[2];
-        
+        /* valores de objetos a 0 y lo mostramos en el html */
         products[i].cantidad=0;
         products[i].subtotal=0;
         unitsProducto.textContent = `${products[i].cantidad} units`;
@@ -275,20 +291,13 @@ const resetearCarrito = event =>{
     itemsPrecio.firstElementChild.textContent = `${unidadesTotales} items`;
     itemsPrecio.lastElementChild.textContent = `$${precioTotal}.00`;
 
-    /* OCULTAMOS EL CARRITO Y MOSTRAMOS EL EMPTY */
+    /* OCULTAMOS EL CARRITO, DESACTIVAMOS BOTON Y MOSTRAMOS EL EMPTY */
     mostrarCarritoProducts();
     checkout.classList.remove('btn-checkout');
     alert('Compra realizada con éxito');
 }
 
-btnMenos.forEach(x=>x.addEventListener('click', operar));
-btnMas.forEach(x=>x.addEventListener('click', operar));
-btnBorrar.forEach(x=>x.addEventListener('click', operar));
-
 checkout.addEventListener('click', resetearCarrito);
-
-/* btnMenos.addEventListener('click', operar);
-btnMas.addEventListener('click', operar); */
 
 
 
