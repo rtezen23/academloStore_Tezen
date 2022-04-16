@@ -10,7 +10,7 @@ const cartIcono = document.getElementById('cart-icono');
 
 menu.addEventListener('click', ()=>{
     nav.style.transform = "translateX(0)";
-    nav.style.transition =  "all 800ms ease"; 
+    nav.style.transition =  "transform 800ms ease"; 
     cartIcono.style.zIndex = "100";
 });
 
@@ -29,6 +29,7 @@ themeIcon.addEventListener('click', ()=>{
     body.classList.toggle('darktheme')
     logo.src = "img/favicon.ico";
 });
+
 
 /* carrito */
 
