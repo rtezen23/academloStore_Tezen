@@ -170,12 +170,21 @@ const añadirElemento = event => {
         mostrarCarritoProducts();
         checkout.classList.add('btn-checkout');
     }
+    const productoActual = event.target.dataset.cartproduct; /* data del producto seleccionado(hoddie, shirt,etc) */
+    /* buscamos el html del stock */
+    const stock = event.target.previousElementSibling;
+    if (stock.textContent == 'Stock: 0') {
+        alert(`Stock de ${productoActual} agotado `);
+        return;
+    }
     contadorCarrito++; /* sumamos 1 al contador del ícono de cart */
     contCarrito.textContent = contadorCarrito; /* cambiamos el valor en el html */
-    const productoActual = event.target.dataset.cartproduct; /* data del producto seleccionado(hoddie, shirt,etc) */
+    
+    let i = 0;
     for (const x of carritoContainers) { /* recorremos cada contenedor de productos */
     /* si su data y la del producto que queremos agregar son iguales entonces lo muestra al quitarle el
     noSelected, porque pusimos que todos así (osea que no se muestren)) */
+
         if(x.dataset.cartproduct == productoActual){ 
             x.classList.remove('noSelected');
             sumarUnidades(x, productoActual); /* le pasamos el contenedor del producto y el data del btn que coincide */
@@ -232,6 +241,10 @@ const operar = event =>{
                 subTotal.textContent = `Subtotal: $${products[x].subtotal}.00`
              } else if(productoActual.includes('sumar')){
                  /* igual que el restar pero acá sumamos */
+                 if (products[x].cantidad==products[x].stock) {
+                     alert(`Se supera el stock de producto ${products[x].nombre}`);
+                     return;
+                 }
                 units = event.target.previousElementSibling;
                 products[x].cantidad++;
                 products[x].subtotal+=products[x].precio;
@@ -284,11 +297,24 @@ const resetearCarrito = event =>{
         const unidades = infoProducto.lastElementChild;
         const unitsProducto = unidades.children[1];
         const subTotalProducto = infoProducto.children[2];
+        /* restamos la cantidad al stock*/ 
+        products[i].stock-=products[i].cantidad;
+        /* Accedemos y cambiamos el stock del html */
+        const stock = infoProducto.children[1].firstElementChild;
+        stock.textContent = `Stock: ${products[i].stock}`;
         /* valores de objetos a 0 y lo mostramos en el html */
         products[i].cantidad=0;
         products[i].subtotal=0;
         unitsProducto.textContent = `${products[i].cantidad} units`;
         subTotalProducto.textContent = `Subtotal: $${products[i].subtotal}.00`
+        
+        /* cambiamos los stock del filtrado (productosContainer son los container de cada product) */
+        for (const y of productosContainers) { /* Recorremos cada product container */
+            if(y.dataset.product == products[i].nombre) {
+                const stockFiltro = y.lastElementChild.children[1];
+                stockFiltro.textContent = `Stock: ${products[i].stock}`;
+            }
+        }
         i++;
     }
     
@@ -306,6 +332,6 @@ const resetearCarrito = event =>{
 
 checkout.addEventListener('click', resetearCarrito);
 
-
+/* EXTRAS */
 
 
